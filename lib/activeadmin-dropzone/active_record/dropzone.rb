@@ -7,10 +7,9 @@ module Activeadmin
 
     module ClassMethods
       def dropzone(association_name)
-        class_eval do
-          %Q(def #{ association_name }_attributes=(attributes)
+        class_eval %Q(
+          def #{ association_name }_attributes=(attributes)
             reflection = self.reflect_on_association('#{ association_name }')
-
 
             self.#{ association_name } = reflection.class_name.constantize.find(attributes.select{ |id, hash| !id.blank? and id != '-1' }.map{ |id, hash| id.to_i }) rescue []
 
@@ -21,8 +20,10 @@ module Activeadmin
             end
 
             self.update_attribute :#{ association_name }_count, self.#{ association_name }.size
-          end)
+          end
+        )
 
+        class_eval do
           def self.dropzone_title_field
             :title
           end

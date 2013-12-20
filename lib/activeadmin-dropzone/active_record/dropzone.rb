@@ -23,15 +23,15 @@ module Activeadmin
             self.update_attribute :#{ association_name }_count, self.#{ association_name }.size
           end)
 
-          def dropzone_title_field
+          def self.dropzone_title_field
             :title
           end
 
-          def dropzone_position_field
+          def self.dropzone_position_field
             :position
           end
 
-          def dropzone_field
+          def self.dropzone_field
             :image
           end
         end

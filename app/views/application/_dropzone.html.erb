@@ -1,0 +1,86 @@
+<div id="images" class="dropzone" style="margin: 10px 20px; border: 1px solid #ccc">
+  <span class="notice">Перетащите сюда файлы или нажмите для загрузки</span>
+  <input type="hidden" name="<%= object.class.to_s.downcase %>[images_attributes][-1]" value="" />
+  <% object.images.each_with_index do |image, index| %>
+    <input type="hidden" name="<%= object.class.to_s.downcase %>[images_attributes][<%= image.id %>][title]" value="<%= image.title %>" />
+  <% end %>
+</div>
+
+<% unless options[:hint].blank? %>
+  <p class="inline-hints" style="margin: 0 0 0 20px; font-size: 0.95em; font-style: italic; color: #666;"><%= options[:hint] %></p>
+<% end %>
+
+<script>
+  var mockFiles = [<%= render_mock_images_files(object.images) %>];
+  Dropzone.autoDiscover = false;
+  window.images_dropzone = new Dropzone("div#images", { 
+    url: '<%= upload_admin_images_path %>',
+    addRemoveLinks: true,
+    dictCancelUpload: 'Отменить',
+    dictRemoveFile: 'Удалить',
+    maxFiles: <%= defined?(max_files) ? '1' : 'null' %>,
+    sending: function(file, xhr, formData) {
+      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').prop('content'));
+    },
+    success: function(file, data) {
+      $('#images.dropzone').append('<input type="hidden" name="<%= object.class.to_s.downcase %>[images_attributes][' + data.id + '][title]" value="" />');
+      $(file.previewElement).attr('data-id', data.id);
+      $(file.previewElement).attr('data-url', data.url);
+      return file.previewElement.classList.add("dz-success");
+    },
+    removedfile: function(file) {
+      $('#images.dropzone input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][title]"]').remove();
+      $('#images.dropzone input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][position]"]').remove();
+      $(file.previewElement).remove();
+      $("#images.dropzone").sortable('refresh');
+    }
+  });
+
+  $("#images.dropzone").sortable({
+    items: '.dz-preview',
+    placeholder: 'sortable-placeholder'
+  });
+
+  var func = function(file) {
+    if (file.id)
+      $(file.previewElement).attr('data-id', file.id);
+
+    $(file.previewElement).find('.dz-filename, img').on('click', function() {
+      var input = $('#images.dropzone input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][title]"]');
+      var title = prompt("Название изображения: ", $(file.previewElement).find('.dz-filename span').text());
+      $(file.previewElement).find('.dz-filename span').text(title);
+      input.val(title);
+    });
+  };
+
+  var generate_images_position_elements = function() {
+    var position = 0;
+    $('#images.dropzone .dz-preview').each(function() {
+      var id = $(this).attr('data-id');
+      $('#images.dropzone').append('<input type="hidden" name="<%= object.class.to_s.downcase %>[images_attributes][' + id + '][position]" value="' + (position++) + '" />');
+    });
+  };
+
+  images_dropzone.on('addedfile', func);
+
+  for (var i = 0; i < mockFiles.length; i++) {
+    var mockFile = mockFiles[i];
+    images_dropzone.options.addedfile.call(images_dropzone, mockFile);
+    func(mockFile);
+    if (mockFile.url)
+      images_dropzone.options.thumbnail.call(images_dropzone, mockFile, mockFile.url);
+      $(mockFile.previewElement).attr('data-url', mockFile.url);
+  }
+
+  $('form').submit(function(e) {
+    if (images_dropzone.getQueuedFiles().length > 0 || images_dropzone.getUploadingFiles().length > 0) {
+      if (confirm("Некоторые файлы еще не загрузились на сервер. Вы действительно хотите сохранить без них?") == true) {
+        generate_images_position_elements();
+      } else {
+        e.preventDefault();
+      }
+    } else {
+      generate_images_position_elements();
+    }
+  });
+</script>

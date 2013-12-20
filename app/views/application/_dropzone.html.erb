@@ -15,7 +15,7 @@
     var mockFiles = [<%= render_mock_dropzone_files(object.send(method)) %>];
     Dropzone.autoDiscover = false;
     var dropzone = new Dropzone("#dropzone_<%= method %>", { 
-      url: '<%= upload_dropzone_path %>',
+      url: '<%= upload_dropzone_path(dropzone_class: 'Image') %>',
       addRemoveLinks: true,
       dictCancelUpload: 'Отменить',
       dictRemoveFile: 'Удалить',

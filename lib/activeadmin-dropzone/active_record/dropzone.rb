@@ -9,7 +9,7 @@ module Activeadmin
       def dropzone(association_name)
         class_eval %Q(
           def #{ association_name }_attributes=(attributes)
-            reflection = self.reflect_on_association('#{ association_name }')
+            reflection = self.klass.reflect_on_association(association_name.to_sym)
 
             self.#{ association_name } = reflection.class_name.constantize.find(attributes.select{ |id, hash| !id.blank? and id != '-1' }.map{ |id, hash| id.to_i }) rescue []
 

@@ -1,4 +1,4 @@
-<div id="dropzone_<%= method %>_<%= cycle(1, 1..999, name: method) %>" class="dropzone" style="margin: 10px 20px; border: 1px solid #ccc">
+<div id="dropzone_<%= method %>_<%= cycle(*(1..999).to_a, name: method) %>" class="dropzone" style="margin: 10px 20px; border: 1px solid #ccc">
   <span class="notice">Перетащите сюда файлы или нажмите для загрузки</span>
   <input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][-1]" value="" />
   <% object.send(method).each_with_index do |dropzone_object, index| %>

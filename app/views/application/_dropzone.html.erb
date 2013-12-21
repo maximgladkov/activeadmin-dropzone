@@ -1,4 +1,4 @@
-<div id="dropzone_<%= method %>" class="dropzone" style="margin: 10px 20px; border: 1px solid #ccc">
+<div id="dropzone_<%= method %>_<%= cycle(1, 1..999, name: method) %>" class="dropzone" style="margin: 10px 20px; border: 1px solid #ccc">
   <span class="notice">Перетащите сюда файлы или нажмите для загрузки</span>
   <input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][-1]" value="" />
   <% object.send(method).each_with_index do |dropzone_object, index| %>
@@ -14,7 +14,8 @@
   (function() {
     var mockFiles = [<%= render_mock_dropzone_files(object.send(method)) %>];
     Dropzone.autoDiscover = false;
-    var dropzone = new Dropzone("#dropzone_<%= method %>", { 
+    var dropzone_id = "#dropzone_<%= method %>_<%= current_cycle(name: method) %>"; 
+    var dropzone = new Dropzone(dropzone_id, { 
       url: '<%= upload_dropzone_path(dropzone_class: 'Image') %>',
       addRemoveLinks: true,
       dictCancelUpload: 'Отменить',
@@ -24,20 +25,20 @@
         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').prop('content'));
       },
       success: function(file, data) {
-        $('#dropzone_<%= method %>').append('<input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + data.id + '][<%= object.class.dropzone_title_field %>]" value="" />');
+        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + data.id + '][<%= object.class.dropzone_title_field %>]" value="" />');
         $(file.previewElement).attr('data-id', data.id);
         $(file.previewElement).attr('data-url', data.url);
         return file.previewElement.classList.add("dz-success");
       },
       removedfile: function(file) {
-        $('#dropzone_<%= method %> input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]').remove();
-        $('#dropzone_<%= method %> input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]').remove();
         $(file.previewElement).remove();
-        $("#dropzone_<%= method %>").sortable('refresh');
+        $(dropzone_id).sortable('refresh');
       }
     });
 
-    $("#dropzone_<%= method %>").sortable({
+    $(dropzone_id).sortable({
       items: '.dz-preview',
       placeholder: 'sortable-placeholder'
     });
@@ -47,7 +48,7 @@
         $(file.previewElement).attr('data-id', file.id);
 
       $(file.previewElement).find('.dz-filename, img').on('click', function() {
-        var input = $('#dropzone_<%= method %> input[name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]');
+        var input = $(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]');
         var title = prompt("Название изображения: ", $(file.previewElement).find('.dz-filename span').text());
         $(file.previewElement).find('.dz-filename span').text(title);
         input.val(title);
@@ -56,9 +57,9 @@
 
     var generate_dropzone_position_elements = function() {
       var position = 0;
-      $('#dropzone_<%= method %> .dz-preview').each(function() {
+      $(dropzone_id + ' .dz-preview').each(function() {
         var id = $(this).attr('data-id');
-        $('#dropzone_<%= method %>').append('<input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + id + '][<%= object.class.dropzone_position_field %>]" value="' + (position++) + '" />');
+        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + id + '][<%= object.class.dropzone_position_field %>]" value="' + (position++) + '" />');
       });
     };
 

@@ -2,7 +2,7 @@
   <span class="notice">Перетащите сюда файлы или нажмите для загрузки</span>
   <input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][-1]" value="" />
   <% object.send(method).each_with_index do |dropzone_object, index| %>
-    <input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][<%= dropzone_object.id %>][<%= object.class.dropzone_title_field %>]" value="<%= object.send(object.class.dropzone_title_field) %>" />
+    <input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][<%= dropzone_object.id %>][<%= object.class.dropzone_title_field %>]" value="<%= dropzone_object.send(object.class.dropzone_title_field) %>" />
   <% end %>
 </div>
 
@@ -48,6 +48,7 @@
         $(file.previewElement).attr('data-id', file.id);
 
       $(file.previewElement).find('.dz-filename, img').on('click', function() {
+        console.log(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]');
         var input = $(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]');
         var title = prompt("Название изображения: ", $(file.previewElement).find('.dz-filename span').text());
         $(file.previewElement).find('.dz-filename span').text(title);

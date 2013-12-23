@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "activeadmin-dropzone.gemspec",
     "app/assets/.DS_Store",
     "app/assets/images/hamburger-retina.gif",
     "app/assets/images/hamburger.gif",

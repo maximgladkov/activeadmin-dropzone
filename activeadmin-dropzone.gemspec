@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maxim Gladkov"]
-  s.date = "2013-12-23"
+  s.date = "2014-01-14"
   s.email = "maksim.gladkov@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -25,11 +25,9 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "activeadmin-dropzone.gemspec",
+    "app/.DS_Store",
     "app/assets/.DS_Store",
-    "app/assets/images/hamburger-retina.gif",
-    "app/assets/images/hamburger.gif",
-    "app/assets/images/spritemap.png",
-    "app/assets/images/spritemap@2x.png",
+    "app/assets/images/.DS_Store",
     "app/assets/javascripts/activeadmin-dropzone.js",
     "app/assets/javascripts/dropzone.js",
     "app/assets/stylesheets/activeadmin-dropzone.css.scss",

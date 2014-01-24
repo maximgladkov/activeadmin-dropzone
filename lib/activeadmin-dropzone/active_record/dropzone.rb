@@ -21,7 +21,7 @@ module Activeadmin
               end
             end
 
-            self.update_attribute :#{ association_name }_count, self.#{ association_name }.size
+            self.update_attribute :#{ association_name }_count, self.#{ association_name }.size if self.respond_to?(:#{ association_name }_count)
           end
         )
 

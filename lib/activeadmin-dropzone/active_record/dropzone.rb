@@ -13,8 +13,6 @@ module Activeadmin
 
             self.#{ association_name } = reflection.class_name.constantize.find(attributes.select{ |id, hash| !id.blank? and id != '-1' }.map{ |id, hash| id.to_i })
 
-            p self.images
-
             self.#{ association_name }.each do |dropzone_object|
               if dropzone_object.title != attributes[dropzone_object.id.to_s]['title'] or dropzone_object.position != attributes[dropzone_object.id.to_s]['position'].to_i
                 dropzone_object.update_attributes title: attributes[dropzone_object.id.to_s]['title'], position: attributes[dropzone_object.id.to_s]['position']
@@ -36,6 +34,10 @@ module Activeadmin
 
           def self.dropzone_field
             :image
+          end
+
+          def self.dropzonable_type_field
+            :imageable_type
           end
         end
       end

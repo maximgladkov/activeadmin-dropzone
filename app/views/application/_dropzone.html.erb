@@ -1,8 +1,8 @@
 <div id="dropzone_<%= method %>_<%= cycle(*(1..999).to_a, name: method) %>" class="dropzone" style="margin: 10px 20px; border: 1px solid #ccc">
   <span class="notice">Перетащите сюда файлы или нажмите для загрузки</span>
-  <input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][-1]" value="" />
+  <input type="hidden" name="<%= object.class.to_s.split('::').last.downcase %>[<%= method %>_attributes][-1]" value="" />
   <% object.send(method).each_with_index do |dropzone_object, index| %>
-    <input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][<%= dropzone_object.id %>][<%= object.class.dropzone_title_field %>]" value="<%= dropzone_object.send(object.class.dropzone_title_field) %>" />
+    <input type="hidden" name="<%= object.class.to_s.split('::').last.downcase %>[<%= method %>_attributes][<%= dropzone_object.id %>][<%= object.class.dropzone_title_field %>]" value="<%= dropzone_object.send(object.class.dropzone_title_field) %>" />
   <% end %>
 </div>
 
@@ -25,14 +25,14 @@
         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').prop('content'));
       },
       success: function(file, data) {
-        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + data.id + '][<%= object.class.dropzone_title_field %>]" value="" />');
+        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.split('::').last.downcase %>[<%= method %>_attributes][' + data.id + '][<%= object.class.dropzone_title_field %>]" value="" />');
         $(file.previewElement).attr('data-id', data.id);
         $(file.previewElement).attr('data-url', data.url);
         return file.previewElement.classList.add("dz-success");
       },
       removedfile: function(file) {
-        $(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]').remove();
-        $(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.to_s.split('::').last.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.to_s.split('::').last.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]').remove();
         $(file.previewElement).remove();
         $(dropzone_id).sortable('refresh');
       }
@@ -48,7 +48,7 @@
         $(file.previewElement).attr('data-id', file.id);
 
       $(file.previewElement).find('.dz-filename, img').on('click', function() {
-        var input = $(dropzone_id + ' input[name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]');
+        var input = $(dropzone_id + ' input[name="<%= object.class.to_s.split('::').last.downcase %>[<%= method %>_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]');
         var title = prompt("Название изображения: ", $(file.previewElement).find('.dz-filename span').text());
         $(file.previewElement).find('.dz-filename span').text(title);
         input.val(title);
@@ -59,7 +59,7 @@
       var position = 0;
       $(dropzone_id + ' .dz-preview').each(function() {
         var id = $(this).attr('data-id');
-        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.downcase %>[<%= method %>_attributes][' + id + '][<%= object.class.dropzone_position_field %>]" value="' + (position++) + '" />');
+        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.split('::').last.downcase %>[<%= method %>_attributes][' + id + '][<%= object.class.dropzone_position_field %>]" value="' + (position++) + '" />');
       });
     };
 

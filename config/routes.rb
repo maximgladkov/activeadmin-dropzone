@@ -1,4 +1,4 @@
-Rails.application.routes.prepend do
+Rails.application.routes.draw do
   
   post '/dropzone/upload' => 'dropzone#upload', as: :upload_dropzone
 

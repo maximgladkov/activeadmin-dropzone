@@ -31,6 +31,10 @@ Add `input` to your ActiveAdmin form:
 
     f.input :images, as: :dropzone
  
+Add `activeadmin-dropzone` to both `active_admin.js` and `active_admin.css` files:
+
+    //= require activeadmin-dropzone
+
 ## Configuration
 
 You can customize columns used for upload by passing `Hash` to the `dropzone_item` method. Here are the default values:

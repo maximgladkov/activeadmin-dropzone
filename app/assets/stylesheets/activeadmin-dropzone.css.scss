@@ -1,48 +1,50 @@
 //= require dropzone
 
-.dropzone {
-  margin: 10px 20px; 
-  border: 1px solid #ccc;
+.active_admin {
+  .dropzone {
+    margin: 10px 20px; 
+    border: 1px solid #ccc;
 
-  a {
-    text-decoration: none;
-    font-size: 13px;
-    color: #666;
-    cursor: pointer;
+    a {
+      text-decoration: none;
+      font-size: 13px;
+      color: #666;
+      cursor: pointer;
+
+      &:hover {
+        color: #000;
+      }
+    }
+
+    span.notice {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: #666;
+    }
 
     &:hover {
-      color: #000;
+      span.notice {
+        color: #000;
+      }
     }
   }
 
-  span.notice {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+  .dropzone-hint {
+    margin: 0 0 0 20px; 
+    font-size: 0.95em; 
+    font-style: italic; 
     color: #666;
   }
 
-  &:hover {
-    span.notice {
-      color: #000;
-    }
+  .sortable-placeholder {
+    position: relative;
+    display: inline-block;
+    margin: 17px !important;
+    vertical-align: top;
+    border: 1px dashed #acacac !important;
+    padding: 6px 6px 6px 6px !important;
+    width: 112px !important;
+    height: 166px !important;
   }
-}
-
-.dropzone-hint {
-  margin: 0 0 0 20px; 
-  font-size: 0.95em; 
-  font-style: italic; 
-  color: #666;
-}
-
-.sortable-placeholder {
-  position: relative;
-  display: inline-block;
-  margin: 17px !important;
-  vertical-align: top;
-  border: 1px dashed #acacac !important;
-  padding: 6px 6px 6px 6px !important;
-  width: 112px !important;
-  height: 166px !important;
 }

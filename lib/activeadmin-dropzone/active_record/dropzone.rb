@@ -70,7 +70,7 @@ module Activeadmin
             #{ options }.keys.include? key.to_sym
           end
 
-          def #{ options[:data] }_url
+          def data_url
             #{ options[:data] }.url
           end
         )

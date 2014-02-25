@@ -15,10 +15,10 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "activeadmin-dropzone"
-  gem.homepage = "http://github.com/maximgladkov/activeadmin-dropzone"
+  gem.homepage = "http://maximgladkov.com/blog/activeadmin-dropzone-gem"
   gem.license = "MIT"
-  gem.summary = %Q{Gem adds support of dropzone.js for ActiveAdmin}
-  gem.email = "maksim.gladkov@gmail.com"
+  gem.summary = %Q{Easy to use integration of drag&drop files upload via dropzone.js for ActiveAdmin}
+  gem.email = "contact@maximgladkov.com"
   gem.authors = ["Maxim Gladkov"]
   # dependencies defined in Gemfile
 end

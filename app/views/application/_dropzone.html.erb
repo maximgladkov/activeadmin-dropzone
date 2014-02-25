@@ -1,38 +1,39 @@
-<div id="dropzone_<%= method %>_<%= cycle(*(1..999).to_a, name: method) %>" class="dropzone" style="margin: 10px 20px; border: 1px solid #ccc">
-  <span class="notice">Перетащите сюда файлы или нажмите для загрузки</span>
-  <input type="hidden" name="<%= object.class.to_s.split('::').first.downcase %>[<%= method %>_attributes][-1]" value="" />
+<div id="dropzone_<%= method %>_<%= cycle(*(1..999).to_a, name: method) %>" class="dropzone">
+  <span class="notice"><%=t 'dropzone.drag_or_click' %></span>
+  <%= hidden_field_tag "#{ object.class.model_name.singular }[#{ method }_attributes][-1]", "" %>
   <% object.send(method).each_with_index do |dropzone_object, index| %>
-    <input type="hidden" name="<%= object.class.to_s.split('::').first.downcase %>[<%= method %>_attributes][<%= dropzone_object.id %>][<%= object.class.dropzone_title_field %>]" value="<%= dropzone_object.send(object.class.dropzone_title_field) %>" />
+    <%= hidden_field_tag "#{ object.class.model_name.singular }[#{ method }_attributes][#{ dropzone_object.id }][#{ object.class.send("dropzone_#{ method }_field", :title) }]", dropzone_object.send(object.class.send("dropzone_#{ method }_field", :title)) %>
   <% end %>
 </div>
 
 <% unless options[:hint].blank? %>
-  <p class="inline-hints" style="margin: 0 0 0 20px; font-size: 0.95em; font-style: italic; color: #666;"><%= options[:hint] %></p>
+  <p class="inline-hints dropzone-hint"><%= options[:hint] %></p>
 <% end %>
 
 <script>
   (function() {
-    var mockFiles = [<%= render_mock_dropzone_files(object.send(method)) %>];
     Dropzone.autoDiscover = false;
+
+    var mockFiles = [<%= render_mock_dropzone_files(object.send(method)) %>];
     var dropzone_id = "#dropzone_<%= method %>_<%= current_cycle(method) %>"; 
     var dropzone = new Dropzone(dropzone_id, { 
-      url: '<%= upload_dropzone_path(dropzonable_class: object.class, dropzone_class: method.to_s.classify) %>',
+      url: '<%= upload_dropzone_path(dropzonable_class: object.class, dropzone_class: object.class.send("dropzone_#{ method }_class")) %>',
       addRemoveLinks: true,
-      dictCancelUpload: 'Отменить',
-      dictRemoveFile: 'Удалить',
+      dictCancelUpload: '<%=t "dropzone.cancel" %>',
+      dictRemoveFile: '<%=t "dropzone.remove" %>',
       maxFiles: <%= defined?(max_files) ? '1' : 'null' %>,
       sending: function(file, xhr, formData) {
         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').prop('content'));
       },
       success: function(file, data) {
-        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.split('::').first.downcase %>[<%= method %>_attributes][' + data.id + '][<%= object.class.dropzone_title_field %>]" value="" />');
+        $(dropzone_id).append('<input type="hidden" name="<%= object.class.model_name.singular %>[<%= method %>_attributes][' + data.id + '][<%= object.class.send("dropzone_#{ method }_field", :title) %>]" value="" />');
         $(file.previewElement).attr('data-id', data.id);
         $(file.previewElement).attr('data-url', data.url);
         return file.previewElement.classList.add("dz-success");
       },
       removedfile: function(file) {
-        $(dropzone_id + ' input[name="<%= object.class.to_s.split('::').first.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]').remove();
-        $(dropzone_id + ' input[name="<%= object.class.to_s.split('::').first.downcase %>[images_attributes][' + file.id + '][<%= object.class.dropzone_position_field %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.model_name.singular %>[images_attributes][' + file.id + '][<%= object.class.send("dropzone_#{ method }_field", :title) %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.model_name.singular %>[images_attributes][' + file.id + '][<%= object.class.send("dropzone_#{ method }_field", :position) %>]"]').remove();
         $(file.previewElement).remove();
         $(dropzone_id).sortable('refresh');
       }
@@ -48,8 +49,9 @@
         $(file.previewElement).attr('data-id', file.id);
 
       $(file.previewElement).find('.dz-filename, img').on('click', function() {
-        var input = $(dropzone_id + ' input[name="<%= object.class.to_s.split('::').first.downcase %>[<%= method %>_attributes][' + file.id + '][<%= object.class.dropzone_title_field %>]"]');
-        var title = prompt("Название изображения: ", $(file.previewElement).find('.dz-filename span').text());
+        var id = $(this).parents('.dz-preview:first').attr('data-id');
+        var input = $(dropzone_id + ' input[name="<%= object.class.model_name.singular %>[<%= method %>_attributes][' + id + '][<%= object.class.send("dropzone_#{ method }_field", :title) %>]"]');
+        var title = prompt("<%=t 'dropzone.title' %>: ", $(file.previewElement).find('.dz-filename span').text());
         $(file.previewElement).find('.dz-filename span').text(title);
         input.val(title);
       });
@@ -59,7 +61,7 @@
       var position = 0;
       $(dropzone_id + ' .dz-preview').each(function() {
         var id = $(this).attr('data-id');
-        $(dropzone_id).append('<input type="hidden" name="<%= object.class.to_s.split('::').first.downcase %>[<%= method %>_attributes][' + id + '][<%= object.class.dropzone_position_field %>]" value="' + (position++) + '" />');
+        $(dropzone_id).append('<input type="hidden" name="<%= object.class.model_name.singular %>[<%= method %>_attributes][' + id + '][<%= object.class.send("dropzone_#{ method }_field", :position) %>]" value="' + (position++) + '" />');
       });
     };
 
@@ -76,7 +78,7 @@
 
     $('form').submit(function(e) {
       if (dropzone.getQueuedFiles().length > 0 || dropzone.getUploadingFiles().length > 0) {
-        if (confirm("Некоторые файлы еще не загрузились на сервер. Вы действительно хотите сохранить без них?") == true) {
+        if (confirm("<%=t 'dropzone.are_you_sure' %>") == true) {
           generate_dropzone_position_elements();
         } else {
           e.preventDefault();

@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = "activeadmin-dropzone"
-  s.version = "0.1.1"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maxim Gladkov"]
   s.date = "2014-01-14"
-  s.email = "maksim.gladkov@gmail.com"
+  s.email = "contact@maximgladkov.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -43,11 +43,11 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/test_activeadmin-dropzone.rb"
   ]
-  s.homepage = "http://github.com/maximgladkov/activeadmin-dropzone"
+  s.homepage = "http://maximgladkov.com/blog/activeadmin-dropzone-gem"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "2.0.3"
-  s.summary = "Gem adds support of dropzone.js for ActiveAdmin"
+  s.summary = "Easy to use integration of drag&drop files upload via dropzone.js for ActiveAdmin"
 
   if s.respond_to? :specification_version then
     s.specification_version = 4

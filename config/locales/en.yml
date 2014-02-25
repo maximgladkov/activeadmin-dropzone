@@ -1,0 +1,7 @@
+en:
+  dropzone:
+    drag_or_click: 'Drag files here or click to upload'
+    cancel: 'Cancel'
+    remove: 'Remove'
+    title: 'Title'
+    are_you_sure: 'Several images have not been uploaded to the server yet. Are you sure to submit form without these images?'

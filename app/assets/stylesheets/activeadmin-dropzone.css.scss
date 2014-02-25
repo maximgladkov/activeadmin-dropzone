@@ -1,6 +1,9 @@
 //= require dropzone
 
 .dropzone {
+  margin: 10px 20px; 
+  border: 1px solid #ccc;
+
   a {
     text-decoration: none;
     font-size: 13px;
@@ -24,6 +27,13 @@
       color: #000;
     }
   }
+}
+
+.dropzone-hint {
+  margin: 0 0 0 20px; 
+  font-size: 0.95em; 
+  font-style: italic; 
+  color: #666;
 }
 
 .sortable-placeholder {

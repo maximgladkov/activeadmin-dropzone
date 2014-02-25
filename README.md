@@ -38,8 +38,8 @@ You can customize columns used for upload by passing `Hash` to the `dropzone_ite
     dropzone_item title: :title, 
                   position: :position, 
                   data: :data, 
-                  file_size: :file_size, 
-                  url: :url
+                  file_size: :data_file_size, 
+                  url: :data_url
 
 ## Contributing to activeadmin-dropzone
  

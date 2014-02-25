@@ -9,11 +9,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maxim Gladkov"]
-  s.date = "2014-01-14"
+  s.date = "2014-02-25"
   s.email = "contact@maximgladkov.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".DS_Store",
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "activeadmin-dropzone.gemspec",
@@ -36,7 +36,10 @@ Gem::Specification.new do |s|
     "app/helpers/active_admin/views_helper.rb",
     "app/inputs/dropzone_input.rb",
     "app/views/application/_dropzone.html.erb",
+    "config/locales/en.yml",
+    "config/locales/ru.yml",
     "config/routes.rb",
+    "lib/.DS_Store",
     "lib/activeadmin-dropzone.rb",
     "lib/activeadmin-dropzone/active_record/dropzone.rb",
     "lib/activeadmin-dropzone/engine.rb",

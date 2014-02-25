@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "activeadmin-dropzone"
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maxim Gladkov"]
@@ -28,6 +28,10 @@ Gem::Specification.new do |s|
     "app/.DS_Store",
     "app/assets/.DS_Store",
     "app/assets/images/.DS_Store",
+    "app/assets/images/hamburger-retina.gif",
+    "app/assets/images/hamburger.gif",
+    "app/assets/images/spritemap.png",
+    "app/assets/images/spritemap@2x.png",
     "app/assets/javascripts/activeadmin-dropzone.js",
     "app/assets/javascripts/dropzone.js",
     "app/assets/stylesheets/activeadmin-dropzone.css.scss",

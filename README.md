@@ -13,7 +13,7 @@ Easy to use integration of drag&drop files upload via [dropzone.js](http://www.d
 
 Add line to your Gemfile:
 
-    gem 'activeadmin-dropzone', '~0.0.1'
+    gem 'activeadmin-dropzone', '~> 0.0.1'
 
 Add `dropzone` to your file container's class: 
 

@@ -1,4 +1,4 @@
-# activeadmin-dropzone
+# activeadmin-dropzone [![Gem Version](https://badge.fury.io/rb/activeadmin-dropzone.png)](http://badge.fury.io/rb/activeadmin-dropzone)
 
 Easy to use integration of drag&drop files upload via [dropzone.js](http://www.dropzonejs.com) for [ActiveAdmin](http://www.activeadmin.info).
 

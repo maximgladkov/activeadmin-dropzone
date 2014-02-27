@@ -26,14 +26,15 @@
         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').prop('content'));
       },
       success: function(file, data) {
-        $(dropzone_id).append('<input type="hidden" name="<%= object.class.model_name.singular %>[<%= method %>_attributes][' + data.id + '][<%= object.class.send("dropzone_#{ method }_field", :title) %>]" value="" />');
+        $(dropzone_id).append('<input type="hidden" name="<%= object.class.model_name.singular %>[<%= method %>_attributes][' + data.id + '][<%= object.class.send("dropzone_#{ method }_field", :title) %>]" value="' + data.title + '" />');
         $(file.previewElement).attr('data-id', data.id);
         $(file.previewElement).attr('data-url', data.url);
+        $(file.previewElement).find('.dz-filename span').text(data.title);
         return file.previewElement.classList.add("dz-success");
       },
       removedfile: function(file) {
-        $(dropzone_id + ' input[name="<%= object.class.model_name.singular %>[images_attributes][' + file.id + '][<%= object.class.send("dropzone_#{ method }_field", :title) %>]"]').remove();
-        $(dropzone_id + ' input[name="<%= object.class.model_name.singular %>[images_attributes][' + file.id + '][<%= object.class.send("dropzone_#{ method }_field", :position) %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.model_name.singular %>[<%= method %>_attributes][' + file.id + '][<%= object.class.send("dropzone_#{ method }_field", :title) %>]"]').remove();
+        $(dropzone_id + ' input[name="<%= object.class.model_name.singular %>[<%= method %>_attributes][' + file.id + '][<%= object.class.send("dropzone_#{ method }_field", :position) %>]"]').remove();
         $(file.previewElement).remove();
         $(dropzone_id).sortable('refresh');
       }

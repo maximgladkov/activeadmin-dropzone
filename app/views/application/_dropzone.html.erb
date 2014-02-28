@@ -17,7 +17,7 @@
     var mockFiles = [<%= render_mock_dropzone_files(object.send(method)) %>];
     var dropzone_id = "#dropzone_<%= method %>_<%= current_cycle(method) %>"; 
     var dropzone = new Dropzone(dropzone_id, { 
-      url: '<%= upload_dropzone_path(dropzonable_class: object.class, dropzone_class: object.class.send("dropzone_#{ method }_class")) %>',
+      url: '<%= raw upload_dropzone_path(dropzonable_class: object.class, dropzone_class: object.class.send("dropzone_#{ method }_class")) %>',
       addRemoveLinks: true,
       dictCancelUpload: '<%=t "dropzone.cancel" %>',
       dictRemoveFile: '<%=t "dropzone.remove" %>',
@@ -88,5 +88,7 @@
         generate_dropzone_position_elements();
       }
     });
+
+    window.<%= method %>_dropzone = dropzone;
   })();
 </script>

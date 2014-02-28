@@ -73,6 +73,12 @@ module Activeadmin
           def data_url
             #{ options[:data] }.url
           end
+
+          def as_json(options = { })
+            super(options).merge({
+              url: data_url
+            })
+          end
         )
       end
     end

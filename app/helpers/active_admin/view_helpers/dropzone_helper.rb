@@ -1,4 +1,4 @@
-module ActiveAdmin::ViewsHelper
+module ActiveAdmin::ViewHelpers::DropzoneHelper
 
   def render_mock_dropzone_files(dropzone_objects)
     dropzone_objects.map do |dropzone_object|

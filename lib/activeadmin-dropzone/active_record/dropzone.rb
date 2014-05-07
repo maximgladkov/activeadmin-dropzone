@@ -34,7 +34,7 @@ module Activeadmin
                 end
               end
 
-              self.update_attribute :#{ association_name }_count, self.#{ association_name }.size if self.respond_to?(:#{ association_name }_count)
+              self.update_attribute :#{ association_name }_count, self.#{ association_name }.count if self.respond_to?(:#{ association_name }_count)
 
               (original_collection - self.#{ association_name }).each do |object|
                 object.destroy

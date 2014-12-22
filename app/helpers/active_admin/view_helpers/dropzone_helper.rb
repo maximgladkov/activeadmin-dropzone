@@ -8,11 +8,7 @@ module ActiveAdmin::ViewHelpers::DropzoneHelper
         size: dropzone_object.send(dropzone_object.class.dropzone_field(:file_size)),
         url: dropzone_object.send(dropzone_object.class.dropzone_field(:url))
       }
-    end.map do |hash|
-      hash.map{ |(k, v)| "#{ k }: '#{ v }'" }.join(',')
-    end.map do |string|
-      "{#{ string }}"
-    end.join(', ').html_safe
+    end.to_json.html_safe
   end
 
 end

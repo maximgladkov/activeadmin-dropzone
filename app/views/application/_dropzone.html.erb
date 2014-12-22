@@ -14,7 +14,7 @@
   (function() {
     Dropzone.autoDiscover = false;
 
-    var mockFiles = [<%= render_mock_dropzone_files(object.send(method)) %>];
+    var mockFiles = <%= render_mock_dropzone_files(object.send(method)) %>;
     var dropzone_id = "#dropzone_<%= method %>_<%= current_cycle(method) %>"; 
     var dropzone = new Dropzone(dropzone_id, { 
       url: '<%= raw upload_dropzone_path(dropzonable_id: (object.new_record? ? nil : object.id), dropzonable_class: object.class, dropzone_class: object.class.send("dropzone_#{ method }_class")) %>',
